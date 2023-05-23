@@ -40,15 +40,19 @@ int main(int argc, char *argv[])
 	while(1) 
 	{
 		message[0] = getch(); message[1] = '\0';
-		if(message[0] =='p')
+		if((message[0] =='p')||(message[0]=='P'))
 		{
 			break;
 		} 
-		else if((message[0]=='w')||(message[0]=='a')||(message[0]=='s')||(message[0]=='d')||(message[0]=='q'))
+		else if((message[0]=='w')||(message[0]=='a')||(message[0]=='s')||(message[0]=='d')||(message[0]=='q')||(message[0]=='r'))
 		{
 			write(sock, message, strlen(message));
 		}
-		else if((message[0]=='W')||(message[0]=='A')||(message[0]=='S')||(message[0]=='D')||(message[0]=='Q'))
+		else if((message[0]=='W')||(message[0]=='A')||(message[0]=='S')||(message[0]=='D')||(message[0]=='Q')||(message[0]=='R'))
+		{
+			write(sock, message, strlen(message));
+		}
+		else if((message[0] =='t')||(message[0]=='T'))
 		{
 			write(sock, message, strlen(message));
 		}

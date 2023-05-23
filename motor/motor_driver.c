@@ -56,7 +56,7 @@ static int motor_open(struct inode * inode,struct file * file)
         return -EBUSY;
     }
     mtr = (volatile unsigned int *)mtr_map; 
-    /* Clear for put 001*/
+    /* Clear */
     // A Pins
     *(mtr+(MOTOR_A_IN1_PIN/10)) &= ~(0x07 <<(3*(MOTOR_A_IN1_PIN%10)));
     *(mtr+(MOTOR_A_IN2_PIN/10)) &= ~(0x07 <<(3*(MOTOR_A_IN2_PIN%10)));
@@ -79,11 +79,11 @@ static int motor_open(struct inode * inode,struct file * file)
 
 static int motor_write(struct file * file,const char * ctrl,size_t length, loff_t * off)
 {
-    set_low();
     // Move for 0.1s
     switch (ctrl[0])
     {
-        case 'w'|'W':{
+        case 'w':
+        case 'W':{
             // Move Forward
             printk("Move Forward\n");
 
@@ -100,7 +100,8 @@ static int motor_write(struct file * file,const char * ctrl,size_t length, loff_
             set_low();
             break;
         }
-        case 'a'|'A':{
+        case 'a':
+        case 'A':{
             // Move Left
             printk("Move Left\n");
 
@@ -117,7 +118,8 @@ static int motor_write(struct file * file,const char * ctrl,size_t length, loff_
             set_low();
             break;
         }
-        case 's'|'S':{
+        case 's':
+        case 'S':{
             // Move Backward
             printk("Move Backward\n");
 
@@ -134,7 +136,8 @@ static int motor_write(struct file * file,const char * ctrl,size_t length, loff_
             set_low();
             break;
         }
-        case 'd'|'D':{
+        case 'd':
+        case 'D':{
             // Move Right
             printk("Move Right\n");
              // MOTOR_A_IN1_PIN : HIGH
@@ -150,13 +153,15 @@ static int motor_write(struct file * file,const char * ctrl,size_t length, loff_
             set_low();
             break;
         }
-        case 'q'|'Q':{
+        case 'q':
+        case 'Q':{
             // Pause
             set_low();
             break;
         }
-        default:{}
+        default:{
             break;
+        }
     }
     return length;
 }
