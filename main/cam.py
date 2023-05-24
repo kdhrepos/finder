@@ -3,8 +3,12 @@ import picamera
 import logging
 import socketserver
 from threading import Condition
+import threading
 from http import server
+import sys
+import select
 
+<<<<<<< HEAD
 PAGE="""\
 <!DOCTYPE html>
 <html>
@@ -29,6 +33,16 @@ PAGE="""\
 		<h1 class="heading">FINDER CAM</h1>
 		<img src="stream.mjpg" width="640" height="480" />
 	</div>
+=======
+PAGE = """\
+<html>
+<head>
+    <title>FINDER</title>
+</head>
+<body>
+    <h1>FINDER CAM</h1>
+    <img src="stream.mjpg" width="640" height="480" />
+>>>>>>> 600a0a7ce4834d637ba79625a7dc93e7f5289739
 </body>
 </html>
 """
@@ -81,6 +95,10 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
                     self.end_headers()
                     self.wfile.write(frame)
                     self.wfile.write(b'\r\n')
+                    # Check if 'q' is pressed
+                    if select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], []):
+                        if sys.stdin.readline().strip() == 'q':
+                            break
             except Exception as e:
                 logging.warning(
                     'Removed streaming client %s: %s',
@@ -99,6 +117,21 @@ with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
     try:
         address = ('', 8000)
         server = StreamingServer(address, StreamingHandler)
-        server.serve_forever()
+        print("Streaming server started.")
+        server_thread = threading.Thread(target=server.serve_forever)
+        server_thread.start()
+
+        # Wait for 'q' to be pressed
+        while True:
+            if select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], []):
+                if sys.stdin.readline().strip() == 'q':
+                    break
+
+        print("Stopping streaming server.")
+        server.shutdown()
+        server.server_close()
+        server_thread.join()
+
     finally:
         camera.stop_recording()
+
