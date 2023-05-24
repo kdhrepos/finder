@@ -88,13 +88,13 @@ static int motor_write(struct file * file,const char * ctrl,size_t length, loff_
             printk("Move Forward\n");
 
             // MOTOR_A_IN1_PIN : HIGH
-            *(mtr + 7) |= (0x01 << MOTOR_A_IN1_PIN);
+            *(mtr + 7) = (0x01 << MOTOR_A_IN1_PIN);
             // MOTOR_B_IN3_PIN : HIGH
-            *(mtr + 7) |= (0x01 << MOTOR_B_IN3_PIN);
+            *(mtr + 7) = (0x01 << MOTOR_B_IN3_PIN);
             // MOTOR_A_IN2_PIN : LOW
-            *(mtr + 10) |= (0x01 << MOTOR_A_IN2_PIN);
+            *(mtr + 10) = (0x01 << MOTOR_A_IN2_PIN);
             // MOTOR_B_IN3_PIN : LOW
-            *(mtr + 10) |= (0x01 << MOTOR_B_IN4_PIN);
+            *(mtr + 10) = (0x01 << MOTOR_B_IN4_PIN);
 
             mdelay(50);
             set_low();
@@ -106,13 +106,13 @@ static int motor_write(struct file * file,const char * ctrl,size_t length, loff_
             printk("Move Left\n");
 
             // MOTOR_A_IN2_PIN : HIGH
-            *(mtr + 7) |= (0x01 << MOTOR_A_IN2_PIN);
+            *(mtr + 7) = (0x01 << MOTOR_A_IN2_PIN);
             // MOTOR_B_IN3_PIN : HIGH
-            *(mtr + 7) |= (0x01 << MOTOR_B_IN3_PIN);
+            *(mtr + 7) = (0x01 << MOTOR_B_IN3_PIN);
             // MOTOR_A_IN1_PIN : LOW
-            *(mtr + 10) |= (0x01 << MOTOR_A_IN1_PIN);
+            *(mtr + 10) = (0x01 << MOTOR_A_IN1_PIN);
             // MOTOR_B_IN3_PIN : LOW
-            *(mtr + 10) |= (0x01 << MOTOR_B_IN4_PIN);
+            *(mtr + 10) = (0x01 << MOTOR_B_IN4_PIN);
 
             mdelay(50);
             set_low();
@@ -124,13 +124,13 @@ static int motor_write(struct file * file,const char * ctrl,size_t length, loff_
             printk("Move Backward\n");
 
             // MOTOR_A_IN2_PIN : HIGH
-            *(mtr + 7) |= (0x01 << MOTOR_A_IN2_PIN);
+            *(mtr + 7) = (0x01 << MOTOR_A_IN2_PIN);
             // MOTOR_B_IN3_PIN : HIGH
-            *(mtr + 7) |= (0x01 << MOTOR_B_IN4_PIN);
+            *(mtr + 7) = (0x01 << MOTOR_B_IN4_PIN);
             // MOTOR_A_IN1_PIN : LOW
-            *(mtr + 10) |= (0x01 << MOTOR_A_IN1_PIN);
+            *(mtr + 10) = (0x01 << MOTOR_A_IN1_PIN);
             // MOTOR_B_IN3_PIN : LOW
-            *(mtr + 10) |= (0x01 << MOTOR_B_IN3_PIN);
+            *(mtr + 10) = (0x01 << MOTOR_B_IN3_PIN);
 
             mdelay(50);
             set_low();
@@ -141,13 +141,13 @@ static int motor_write(struct file * file,const char * ctrl,size_t length, loff_
             // Move Right
             printk("Move Right\n");
              // MOTOR_A_IN1_PIN : HIGH
-            *(mtr + 7) |= (0x01 << MOTOR_A_IN1_PIN);
+            *(mtr + 7) = (0x01 << MOTOR_A_IN1_PIN);
             // MOTOR_B_IN3_PIN : HIGH
-            *(mtr + 7) |= (0x01 << MOTOR_B_IN4_PIN);
+            *(mtr + 7) = (0x01 << MOTOR_B_IN4_PIN);
             // MOTOR_A_IN2_PIN : LOW
-            *(mtr + 10) |= (0x01 << MOTOR_A_IN2_PIN);
+            *(mtr + 10) = (0x01 << MOTOR_A_IN2_PIN);
             // MOTOR_B_IN3_PIN : LOW
-            *(mtr + 10) |= (0x01 << MOTOR_B_IN3_PIN);
+            *(mtr + 10) = (0x01 << MOTOR_B_IN3_PIN);
 
             mdelay(50);
             set_low();
@@ -179,10 +179,10 @@ static void motor_exit(void)
 static void set_low(void)
 {
     // Every Pin Low
-    *(mtr + 10) |= (0x01 << MOTOR_A_IN1_PIN);
-    *(mtr + 10) |= (0x01 << MOTOR_A_IN2_PIN);
-    *(mtr + 10) |= (0x01 << MOTOR_B_IN3_PIN);
-    *(mtr + 10) |= (0x01 << MOTOR_B_IN4_PIN);
+    *(mtr + 10) = (0x01 << MOTOR_A_IN1_PIN);
+    *(mtr + 10) = (0x01 << MOTOR_A_IN2_PIN);
+    *(mtr + 10) = (0x01 << MOTOR_B_IN3_PIN);
+    *(mtr + 10) = (0x01 << MOTOR_B_IN4_PIN);
 }
 module_init(motor_init);
 module_exit(motor_exit);

@@ -16,9 +16,11 @@ void error_handling(char *message);
 char reverse(char ctrl);
 char comeback();
 
+
 char backup_ctrl[MAX_SIZE];
+int backup_len=0;
+
 int motor,led;
-char message[BUF_SIZE];
 
 int main(int argc, char *argv[])
 {
@@ -31,7 +33,7 @@ int main(int argc, char *argv[])
         socklen_t clnt_adr_sz;
 
         if(argc!=3) {
-                printf("Usage : %s <port>\n", argv[1]);
+                printf("Usage : <ip addr> <port>\n");
                 exit(2);
         }
 
@@ -64,41 +66,39 @@ int main(int argc, char *argv[])
         /* ==================== Finder Run ==================== */
         motor=open(MOTOR_DRIVER,O_RDWR);
         led=open(LED_DRIVER,O_RDWR);
+        char message[BUF_SIZE];
         while(read(clnt_sock, message, BUF_SIZE))
         {       
-                 /* p : Finder Exit */
+                int message_len=strlen(message);
+                
+                /* save data for returning of the car */
+                backup_ctrl[backup_len++]=reverse(message[0]);
+                /* p :  Exit */
                 if((message[0] =='p')||(message[0]=='P'))
 		{
 			break;
 		} 
                 /* r : return to base */
-                else if(message[0]=='r' || message[0]=='R')
+                else if((message[0]=='r')|| (message[0]=='R'))
                 {
                         comeback();
+                        backup_len=0;
                         continue;
                 }
                 /* send command to device driver */
 		else if((message[0]=='w')||(message[0]=='a')||(message[0]=='s')||(message[0]=='d')||(message[0]=='q'))
 		{
-			write(motor,message,BUF_SIZE);
+			write(motor,message,message_len);
 		}
 		else if((message[0]=='W')||(message[0]=='A')||(message[0]=='S')||(message[0]=='D')||(message[0]=='Q'))
 		{
-			write(motor,message,BUF_SIZE);
+			write(motor,message,message_len);
 		}
                 /* led command to device driver*/
 		else if((message[0] =='t')||(message[0]=='T'))
 		{
-			write(led, message, strlen(message));
+			write(led, message,message_len);
 		}
-                /* save data for returning of the car */
-                message[0]=reverse(message[0]);
-                strncat(backup_ctrl,message,1);
-
-        //      char * copied=(char *)malloc(sizeof(char)*BUF_SIZE);
-        //      strcpy(copied,message);
-        //      write(motor,copied,BUF_SIZE);
-        //      write(motor,message,BUF_SIZE);
         }
         /* ==================== Finder End ==================== */
 
@@ -135,11 +135,14 @@ char reverse(char ctrl)
 }
 char comeback()
 {
-        int i,len=strlen(backup_ctrl);
-        for(i=0; i<len; i++)
+        int i;
+        backup_ctrl[backup_len]=0;
+
+        char message[BUF_SIZE];
+        for(i=backup_len-1; i>=0; i--)
         {
                 message[0]=backup_ctrl[i]; message[1]='\0';
-                write(motor,message,BUF_SIZE);
+                write(motor,message,strlen(message));
+                backup_ctrl[i]=0;
         }
-        backup_ctrl='\0';
 }

@@ -6,13 +6,29 @@ from threading import Condition
 from http import server
 
 PAGE="""\
+<!DOCTYPE html>
 <html>
 <head>
 	<title>FINDER</title>
+	<style>
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+		}
+
+		.heading {
+			text-align: center;
+		}
+	</style>
 </head>
 <body>
-	<h1>FINDER CAM</h1>
-	<img src="stream.mjpg" width="640" height="480" />
+	<div class="container">
+		<h1 class="heading">FINDER CAM</h1>
+		<img src="stream.mjpg" width="640" height="480" />
+	</div>
 </body>
 </html>
 """

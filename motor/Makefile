@@ -5,8 +5,12 @@ obj-m := $(MODULE_NAME).o
 default:
 	$(MAKE) -C $(KDIR) M=$$PWD modules
 app:
-	gcc -o motor motor_test.c
-install:
-	cp -f $(MODULE_NAME).ko /root/raspberry/nfs
+	gcc -o motor motor_test.C
+insert:
+	insmod $(MODULE_NAME).ko
+device:
+	mknod /dev/$(MODULE_NAME) c 236 0
+chmod:
+	chmod ug+w /dev/$(MODULE_NAME)
 clean:
 	$(MAKE) -C $(KDIR) M=$$PWD clean
