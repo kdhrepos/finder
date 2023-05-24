@@ -6,16 +6,24 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 
-#define BUF_SIZE 3
-#define MOTOR_FILE_NAME "/dev/motor_driver"
+#define BUF_SIZE 2
+#define MAX_SIZE 100000
+#define MOTOR_DRIVER "/dev/motor_driver"
+#define LED_DRIVER "/dev/led_driver"
+
 
 void error_handling(char *message);
+char reverse(char ctrl);
+char comeback();
+
+char backup_ctrl[MAX_SIZE];
+int motor,led;
+char message[BUF_SIZE];
 
 int main(int argc, char *argv[])
 {
         /* ==================== TCP/IP ========================================*/
         int serv_sock, clnt_sock;
-        char message[BUF_SIZE];
         int str_len, i;
 
         struct sockaddr_in serv_adr;
@@ -54,16 +62,43 @@ int main(int argc, char *argv[])
         /* ============================================================*/
 
         /* ==================== Finder Run ==================== */
-        int motor=open(MOTOR_FILE_NAME,O_RDWR);
-        while(read(clnt_sock, message, BUF_SIZE)){
-			if(message[0]=='p' || message[0]=='P'){
-				break;
-			}
+        motor=open(MOTOR_DRIVER,O_RDWR);
+        led=open(LED_DRIVER,O_RDWR);
+        while(read(clnt_sock, message, BUF_SIZE))
+        {       
+                 /* p : Finder Exit */
+                if((message[0] =='p')||(message[0]=='P'))
+		{
+			break;
+		} 
+                /* r : return to base */
+                else if(message[0]=='r' || message[0]=='R')
+                {
+                        comeback();
+                        continue;
+                }
+                /* send command to device driver */
+		else if((message[0]=='w')||(message[0]=='a')||(message[0]=='s')||(message[0]=='d')||(message[0]=='q'))
+		{
+			write(motor,message,BUF_SIZE);
+		}
+		else if((message[0]=='W')||(message[0]=='A')||(message[0]=='S')||(message[0]=='D')||(message[0]=='Q'))
+		{
+			write(motor,message,BUF_SIZE);
+		}
+                /* led command to device driver*/
+		else if((message[0] =='t')||(message[0]=='T'))
+		{
+			write(led, message, strlen(message));
+		}
+                /* save data for returning of the car */
+                message[0]=reverse(message[0]);
+                strncat(backup_ctrl,message,1);
+
         //      char * copied=(char *)malloc(sizeof(char)*BUF_SIZE);
         //      strcpy(copied,message);
-             write(1,message,BUF_SIZE);
         //      write(motor,copied,BUF_SIZE);
-                // write(motor,message,BUF_SIZE);
+        //      write(motor,message,BUF_SIZE);
         }
         /* ==================== Finder End ==================== */
 
@@ -78,4 +113,33 @@ void error_handling(char *message)
         fputs(message, stderr);
         fputc('\n', stderr);
         exit(1);
+}
+char reverse(char ctrl)
+{
+    switch (ctrl) {
+        case 'w':
+        case 'W':
+            return 's';
+        case 'a':
+        case 'A':
+            return 'd';
+        case 's':
+        case 'S':
+            return 'w';
+        case 'd':
+        case 'D':
+            return 'a';
+        default:
+            return ctrl;
+    }
+}
+char comeback()
+{
+        int i,len=strlen(backup_ctrl);
+        for(i=0; i<len; i++)
+        {
+                message[0]=backup_ctrl[i]; message[1]='\0';
+                write(motor,message,BUF_SIZE);
+        }
+        backup_ctrl='\0';
 }
