@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
                 error_handling("accept() error");
         }
         else{
-                printf("Connected client\n");
+                printf("Finder Run\n");
         }
         /* ============================================================*/
 
@@ -70,8 +70,12 @@ int main(int argc, char *argv[])
         while(read(clnt_sock, message, BUF_SIZE))
         {       
                 int message_len=strlen(message);
-                
+
                 /* save data for returning of the car */
+                if(backup_len=MAX_SIZE-1){
+                        backup_ctrl[0]='\0';
+                        backup_len=0;
+                }
                 backup_ctrl[backup_len++]=reverse(message[0]);
                 /* p :  Exit */
                 if((message[0] =='p')||(message[0]=='P'))
