@@ -8,7 +8,6 @@ from http import server
 import sys
 import select
 
-<<<<<<< HEAD
 PAGE="""\
 <!DOCTYPE html>
 <html>
@@ -34,17 +33,7 @@ PAGE="""\
 		<img src="stream.mjpg" width="640" height="480" />
 	</div>
 =======
-PAGE = """\
-<html>
-<head>
-    <title>FINDER</title>
-</head>
-<body>
-    <h1>FINDER CAM</h1>
-    <img src="stream.mjpg" width="640" height="480" />
->>>>>>> 600a0a7ce4834d637ba79625a7dc93e7f5289739
-</body>
-</html>
+
 """
 
 class StreamingOutput(object):
@@ -134,4 +123,3 @@ with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
 
     finally:
         camera.stop_recording()
-

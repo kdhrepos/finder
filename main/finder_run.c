@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
                 int message_len=strlen(message);
 
                 /* save data for returning of the car */
-                if(backup_len=MAX_SIZE-1){
+                if(backup_len==MAX_SIZE-1){
                         backup_ctrl[0]='\0';
                         backup_len=0;
                 }

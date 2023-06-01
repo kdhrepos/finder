@@ -5,7 +5,7 @@ obj-m := $(MODULE_NAME).o
 default:
 	$(MAKE) -C $(KDIR) M=$$PWD modules
 app:
-	gcc -o motor motor_test.C
+	gcc -o motor motor_test.c
 insert:
 	insmod $(MODULE_NAME).ko
 device:
