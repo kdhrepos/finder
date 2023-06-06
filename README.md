@@ -58,13 +58,13 @@ Follow the steps below to get started with the "finder" project:
 
 4. In main directory on target system,
     ```
-   # make
+   # make finder_control
    # ./finder_run [IP Address] [Port Number]
     ```
     
 5. In main directory on client,  
     ```
-   # make
+   # make finder_control
    # ./finder_control [IP Address] [Port Number]
     ```
     
