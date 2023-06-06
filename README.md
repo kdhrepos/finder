@@ -19,7 +19,40 @@ This repository contains the embedded software project called "finder." The proj
 Follow the steps below to get started with the "finder" project:
 
 1. Clone this repository to your local machine.
-2. Install the necessary dependencies and libraries, if any.
-3. Connect the LED and motor components to the target hardware according to the provided documentation.
-4. Build and upload the software to the embedded system.
-5. Run the main program to start controlling the LED and motor.
+2. In motor directory, 
+    ```
+   mknod /dev/motor_driver c 237 0
+   chmod ug+w /dev/motor_driver
+   insmod motor_driver.ko
+
+   // in short,
+   make
+   make device
+   make chmod
+   make insert
+    ```
+    
+3. In led directory,  
+    ```
+   mknod /dev/led_driver c 237 0
+   chmod ug+w /dev/led_driver
+   insmod led_driver.ko
+
+   // in short,
+   make
+   make device
+   make chmod
+   make insert
+    ```
+    
+4. In main directory on target system,   
+    ```
+   ./finder_run [IP Address] [Port Number]
+    ```
+    
+5. In main directory on client,  
+    ```
+   ./finder_control [IP Address] [Port Number]
+    ```
+    
+6. Input "w", "a", "s", "d", "t", "r", "p" at client 
