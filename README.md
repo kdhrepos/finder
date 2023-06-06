@@ -10,14 +10,9 @@ This repository contains the embedded software project called "finder." The proj
 
 2. __Components__ - The project consists of the following components:
 
-    Main
-The `main` program is the central module that coordinates the functionality of the LED and motor components. It includes the necessary initialization, configuration, and control logic to integrate the LED and motor functionalities.
+    `Motor` : The motor component enables the control of a motor using software commands. It allows for setting the speed, direction, and other motor-related operations.
 
-    Motor
-The `motor` component enables the control of a motor using software commands. It allows for setting the speed, direction, and other motor-related operations.
-
-    LED
-The `LED` component allows for controlling the illumination using software commands. It provides functionalities such as turning the LED on or off, adjusting brightness, and changing colors.
+    `LED` : The LED component allows for controlling the illumination using software commands. It provides functionalities such as turning the LED on or off, adjusting brightness, and changing colors.
 
 
 ## Getting Started
