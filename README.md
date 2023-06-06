@@ -8,51 +8,64 @@ This repository contains the embedded software project called "finder." The proj
 
     reference : https://wikidocs.net/3243 is how the kernel is built.
 
-2. __Components__ - The project consists of the following components:
+2. __Components__ - The project consists of the following components
 
-    `Motor` : The motor component enables the control of a motor using software commands. It allows for setting the speed, direction, and other motor-related operations.
+    `Motor driver` : Motor drivers to control the RC motors on each wheel of the vehicle
 
-    `LED` : The LED component allows for controlling the illumination using software commands. It provides functionalities such as turning the LED on or off, adjusting brightness, and changing colors.
+    `LED driver` : Led driver for controlling Leds with on/off functionality
 
 
 ## Getting Started
 Follow the steps below to get started with the "finder" project:
 
 1. Clone this repository to your local machine.
-2. In motor directory, 
+2. Obtain administrator privileges
+   ```
+   $ sudo -i
+   ```
+4. In motor directory, 
     ```
-   mknod /dev/motor_driver c 237 0
-   chmod ug+w /dev/motor_driver
-   insmod motor_driver.ko
+   # make
+   # mknod /dev/motor_driver c 237 0
+   # chmod ug+w /dev/motor_driver
+   # insmod motor_driver.ko
 
    // in short,
-   make
-   make device
-   make chmod
-   make insert
+   # make
+   # make device
+   # make chmod
+   # make insert
     ```
     
 3. In led directory,  
     ```
-   mknod /dev/led_driver c 237 0
-   chmod ug+w /dev/led_driver
-   insmod led_driver.ko
+   # make
+   # mknod /dev/led_driver c 237 0
+   # chmod ug+w /dev/led_driver
+   # insmod led_driver.ko
 
    // in short,
-   make
-   make device
-   make chmod
-   make insert
+   # make
+   # make device
+   # make chmod
+   # make insert
     ```
-    
-4. In main directory on target system,   
+
+4. In main directory on target system,
     ```
-   ./finder_run [IP Address] [Port Number]
+    # python3 cam.py
+    ```
+
+4. In main directory on target system,
+    ```
+   # make
+   # ./finder_run [IP Address] [Port Number]
     ```
     
 5. In main directory on client,  
     ```
-   ./finder_control [IP Address] [Port Number]
+   # make
+   # ./finder_control [IP Address] [Port Number]
     ```
     
 6. Input "w", "a", "s", "d", "t", "r", "p" at client 
