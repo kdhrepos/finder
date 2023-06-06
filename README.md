@@ -4,17 +4,21 @@ Embedded Software Project
 ## Description
 This repository contains the embedded software project called "finder." The project focuses on controlling __LED__ and __MOTOR__ `driver modules` through a main program.
 
-## Components
-The project consists of the following components:
+1. __Target System Kernel Install__ - How to install the kernel on the Raspberry Pi 4B used in the project
 
-### LED
-The `LED` component allows for controlling the illumination using software commands. It provides functionalities such as turning the LED on or off, adjusting brightness, and changing colors.
+    reference : https://wikidocs.net/3243 is how the kernel is built.
 
-### Motor
+2. __Components__ - The project consists of the following components:
+
+    Main
+The `main` program is the central module that coordinates the functionality of the LED and motor components. It includes the necessary initialization, configuration, and control logic to integrate the LED and motor functionalities.
+
+    Motor
 The `motor` component enables the control of a motor using software commands. It allows for setting the speed, direction, and other motor-related operations.
 
-### Main
-The `main` program is the central module that coordinates the functionality of the LED and motor components. It includes the necessary initialization, configuration, and control logic to integrate the LED and motor functionalities.
+    LED
+The `LED` component allows for controlling the illumination using software commands. It provides functionalities such as turning the LED on or off, adjusting brightness, and changing colors.
+
 
 ## Getting Started
 Follow the steps below to get started with the "finder" project:
