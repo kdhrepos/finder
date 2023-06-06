@@ -82,7 +82,7 @@ static int motor_open(struct inode * inode,struct file * file)
 
 static int motor_write(struct file * file,const char * ctrl,size_t length, loff_t * off)
 {
-    // 0.1초 동안 움직임
+    // 0.05초 동안 움직임
     switch (ctrl[0])
     {
         case 'w':
