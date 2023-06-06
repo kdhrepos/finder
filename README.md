@@ -58,7 +58,7 @@ Follow the steps below to get started with the "finder" project:
 
 4. In main directory on target system,
     ```
-   # make finder_control
+   # make finder_run
    # ./finder_run [IP Address] [Port Number]
     ```
     
